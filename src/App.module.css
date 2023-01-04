@@ -1,0 +1,92 @@
+.app {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.formWrapper {
+  display: flex;
+  gap: .5rem;
+  margin-top: -2rem;
+}
+
+.content {
+  width: 50vw;
+}
+
+.content section header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 4.5rem;
+  font-weight: bold;
+}
+
+.content section header p span {
+  background: var(--gray-400);
+  color: var(--gray-100);
+  font-size: 0.875rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+}
+
+.tasksCreated {
+  color: var(--blue-500);
+}
+
+.tasksProgress {
+  color: var(--brand);
+}
+
+.content section article button {
+  padding: .25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  color: var(--gray-300);
+  cursor: pointer;
+  transition: background-color .25s;
+}
+
+.content section article button:hover {
+  border-radius: 2px;
+  background: var(--gray-400);
+  color: var(--red-200);
+}
+
+.todo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  background: var(--gray-500);
+  border: 1px solid var(--gray-400);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.todo div {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  color: var(--gray-100);
+}
+
+.todo div p {
+  overflow-wrap: anywhere;
+}
+
+.todo div p.todoDoneDescription {
+  text-decoration-line: line-through;
+  color: var(--gray-300);
+}
+
+@media (max-width: 480px) {
+  .content {
+    width: 90vw;
+  } 
+}
+
