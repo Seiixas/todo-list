@@ -1,25 +1,39 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { PlusCircle, Trash } from "phosphor-react";
 import { v4 } from "uuid";
+import { useSnackbar } from "notistack";
 
 import { Button } from "./components/Button/Button";
 import { Header } from "./components/Header/Header";
 import { Input } from "./components/Input/Input";
 
 import "./global.css";
-
 import styles from "./App.module.css";
+
 import { TTodo } from "./types/TTodo";
-import { useSnackbar } from "notistack";
 
 function App() {
-  const [todos, setTodos] = useState<TTodo[]>([]);
-  const [newTodoDescription, setNewTodoDescription] = useState("");
+  const [todos, setTodos] = useState<TTodo[]>(setTodosInState);
+  const [newTodoDescription, setNewTodoDescription] = useState('');
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const allTodosCount = todos.length;
   const allTodosCompleted = todos.filter((todo) => todo.done).length;
+
+  function setTodosInState(): TTodo[] | [] {
+    const todosInLocalStorage = localStorage.getItem("todos");
+
+    return todosInLocalStorage ? JSON.parse(todosInLocalStorage) : [];
+  }
+
+  function saveInLocalStorage(key: string, todos: TTodo[]) {
+    localStorage.setItem(key, JSON.stringify(todos));
+  }
+
+  useEffect(() => {
+    saveInLocalStorage("todos", todos);
+  }, [todos]);
 
   function handleCreateTodo() {
     if (newTodoDescription === "")
@@ -35,6 +49,8 @@ function App() {
 
     setTodos((prev) => [...prev, newTodo]);
     setNewTodoDescription("");
+
+    localStorage.setItem("todos", JSON.stringify(todos));
 
     enqueueSnackbar("Tarefa criada com sucesso!", { variant: "success" });
   }
@@ -96,6 +112,7 @@ function App() {
                 <div className={styles.checkbox}>
                   <input
                     type="checkbox"
+                    checked={todo.done}
                     onClick={() => handleChangeTodoStatus(todo.id)}
                   />
                 </div>
